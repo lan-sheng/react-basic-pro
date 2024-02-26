@@ -1,10 +1,11 @@
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import './App.scss'
 import avatar from './images/bozai.png'
 import _ from 'lodash'
 import classNames from 'classnames'
 import { v4 as uuidv4 } from 'uuid'
 import dayjs from 'dayjs'
+import axios from 'axios'
 /**
  * 评论列表的渲染和操作
  *
@@ -78,7 +79,18 @@ const tabs = [
 ]
 
 const App = () => {
-  const [commentList, setCommentList] = useState(_.orderBy(defaultList, 'like', 'desc'))
+  // const [commentList, setCommentList] = useState(_.orderBy(defaultList, 'like', 'desc'))
+  const [commentList, setCommentList] = useState([])
+
+  useEffect(() => {
+    async function getList() {
+      const res = await axios.get('http://localhost:3004/list')
+      console.log('res: ', res)
+      setCommentList(res.data)
+    }
+    getList()
+  }, [])
+
   const handleDel = rpid => {
     console.log('rpid: ', rpid)
     setCommentList(commentList.filter(item => item.rpid !== rpid))
