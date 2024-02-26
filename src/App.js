@@ -1,9 +1,9 @@
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import './App.scss'
 import avatar from './images/bozai.png'
 import _ from 'lodash'
 import classNames from 'classnames'
-import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4 } from 'uuid'
 import dayjs from 'dayjs'
 /**
  * 评论列表的渲染和操作
@@ -94,6 +94,7 @@ const App = () => {
     }
   }
   const [content, setContent] = useState('')
+  const inputRef = useRef(null)
   const handlPubList = () => {
     setCommentList([
       ...commentList,
@@ -109,6 +110,8 @@ const App = () => {
         like: 66,
       },
     ])
+    setContent('')
+    inputRef.current.focus()
   }
   return (
     <div className="app">
@@ -143,7 +146,7 @@ const App = () => {
           </div>
           <div className="reply-box-wrap">
             {/* 评论框 */}
-            <textarea className="reply-box-textarea" placeholder="发一条友善的评论" value={content} onChange={e => setContent(e.target.value)} />
+            <textarea className="reply-box-textarea" placeholder="发一条友善的评论" value={content} onChange={e => setContent(e.target.value)} ref={inputRef} />
             {/* 发布按钮 */}
             <div className="reply-box-send">
               <div className="send-text" onClick={handlPubList}>
