@@ -78,26 +78,29 @@ const tabs = [
   { type: 'time', text: '最新' },
 ]
 
-const App = () => {
-  // const [commentList, setCommentList] = useState(_.orderBy(defaultList, 'like', 'desc'))
+function useGetList() {
   const [commentList, setCommentList] = useState([])
 
   useEffect(() => {
     async function getList() {
       const res = await axios.get('http://localhost:3004/list')
-      console.log('res: ', res)
+
       setCommentList(res.data)
     }
     getList()
   }, [])
+  return { commentList, setCommentList }
+}
+
+const App = () => {
+  const { commentList, setCommentList } = useGetList()
 
   const handleDel = rpid => {
-    console.log('rpid: ', rpid)
     setCommentList(commentList.filter(item => item.rpid !== rpid))
   }
+
   const [type, setType] = useState('hot')
   const handleTabChange = type => {
-    console.log('type: ', type)
     setType(type)
     if (type === 'hot') {
       setCommentList(_.orderBy(commentList, 'like', 'desc'))
@@ -105,6 +108,7 @@ const App = () => {
       setCommentList(_.orderBy(commentList, 'ctime', 'desc'))
     }
   }
+
   const [content, setContent] = useState('')
   const inputRef = useRef(null)
   const handlPubList = () => {
