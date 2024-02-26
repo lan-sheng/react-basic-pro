@@ -88,8 +88,8 @@ const App = () => {
           </li>
           <li className="nav-sort">
             {/* 高亮类名： active */}
-            <span className='nav-item'>最新</span>
-            <span className='nav-item'>最热</span>
+            <span className="nav-item">最新</span>
+            <span className="nav-item">最热</span>
           </li>
         </ul>
       </div>
@@ -105,10 +105,7 @@ const App = () => {
           </div>
           <div className="reply-box-wrap">
             {/* 评论框 */}
-            <textarea
-              className="reply-box-textarea"
-              placeholder="发一条友善的评论"
-            />
+            <textarea className="reply-box-textarea" placeholder="发一条友善的评论" />
             {/* 发布按钮 */}
             <div className="reply-box-send">
               <div className="send-text">发布</div>
@@ -118,38 +115,34 @@ const App = () => {
         {/* 评论列表 */}
         <div className="reply-list">
           {/* 评论项 */}
-          <div className="reply-item">
-            {/* 头像 */}
-            <div className="root-reply-avatar">
-              <div className="bili-avatar">
-                <img
-                  className="bili-avatar-img"
-                  alt=""
-                />
+          {commentList.map(item => (
+            <div className="reply-item" key={item.rpid}>
+              {/* 头像 */}
+              <div className="root-reply-avatar">
+                <div className="bili-avatar">
+                  <img className="bili-avatar-img" alt="" src={ item.user.avatar} />
+                </div>
               </div>
-            </div>
 
-            <div className="content-wrap">
-              {/* 用户名 */}
-              <div className="user-info">
-                <div className="user-name">jack</div>
-              </div>
-              {/* 评论内容 */}
-              <div className="root-reply">
-                <span className="reply-content">这是一条评论回复</span>
-                <div className="reply-info">
-                  {/* 评论时间 */}
-                  <span className="reply-time">{'2023-11-11'}</span>
-                  {/* 评论数量 */}
-                  <span className="reply-time">点赞数:{100}</span>
-                  <span className="delete-btn">
-                    删除
-                  </span>
-
+              <div className="content-wrap">
+                {/* 用户名 */}
+                <div className="user-info">
+                  <div className="user-name">{ item.user.uname}</div>
+                </div>
+                {/* 评论内容 */}
+                <div className="root-reply">
+                  <span className="reply-content">{ item.content}</span>
+                  <div className="reply-info">
+                    {/* 评论时间 */}
+                    <span className="reply-time">{item.ctime}</span>
+                    {/* 评论数量 */}
+                    <span className="reply-time">点赞数:{item.like}</span>
+                    <span className="delete-btn">删除</span>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
+          ))}
         </div>
       </div>
     </div>
